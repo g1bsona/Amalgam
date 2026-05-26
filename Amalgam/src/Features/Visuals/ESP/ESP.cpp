@@ -134,15 +134,15 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 
 	if (pGroup->m_iESP & ESPEnum::WeaponIcon && pWeapon)
 		tCache.m_pWeaponIcon = pWeapon->GetWeaponIcon();
-	if (pGroup->m_iESP & ESPEnum::WeaponText && pWeapon)
+	if (pGroup->m_iESP & ESPEnum::StaticWeaponText && pWeapon)
+	{
+		tCache.m_vText.emplace_back(ALIGN_BOTTOM, pPlayer->GetWeaponName(), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+	}
+	if (pGroup->m_iESP & ESPEnum::DynamicWeaponText && pWeapon)
 	{
 		auto pAttributeManager = U::Memory.CallVirtual<1, void*>(uintptr_t(pWeapon) + 3096);
 		auto pCurItemData = reinterpret_cast<void*>(uintptr_t(pAttributeManager) + 144);
 		tCache.m_vText.emplace_back(ALIGN_BOTTOM, SDK::ConvertWideToUTF8(S::CEconItemView_GetItemName.Call<const wchar_t*>(pCurItemData)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
-	}
-	if (pGroup->m_iESP & ESPEnum::StaticWeaponText && pWeapon)
-	{
-		tCache.m_vText.emplace_back(ALIGN_BOTTOM, pPlayer->GetWeaponName(), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 	}
 
 	if (pGroup->m_iESP & ESPEnum::LagCompensation && !pPlayer->IsDormant() && !bLocal)

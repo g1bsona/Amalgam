@@ -981,7 +981,7 @@ void CMenu::MenuVisuals(int iTab)
 					if (tGroup.m_iTargets & TargetsEnum::Players)
 					{
 						vEntries.insert(vEntries.end(), { "Uber bar", "Uber text", "Class icon", "Class text", "Weapon icon", "Static Weapon Text", "Weapon text", "Priority", "Labels", "Buffs", "Debuffs" });
-						vValues.insert(vValues.end(), { ESPEnum::UberBar, ESPEnum::UberText, ESPEnum::ClassIcon, ESPEnum::ClassText, ESPEnum::WeaponIcon, ESPEnum::StaticWeaponText, ESPEnum::WeaponText, ESPEnum::Priority, ESPEnum::Labels, ESPEnum::Buffs, ESPEnum::Debuffs });
+						vValues.insert(vValues.end(), { ESPEnum::UberBar, ESPEnum::UberText, ESPEnum::ClassIcon, ESPEnum::ClassText, ESPEnum::WeaponIcon, ESPEnum::StaticWeaponText, ESPEnum::DynamicWeaponText, ESPEnum::Priority, ESPEnum::Labels, ESPEnum::Buffs, ESPEnum::Debuffs });
 					}
 					if (tGroup.m_iTargets & (TargetsEnum::Players | TargetsEnum::Buildings | TargetsEnum::Projectiles | TargetsEnum::Objective))
 					{
@@ -1119,14 +1119,12 @@ void CMenu::MenuVisuals(int iTab)
 					{
 						FSlider(Vars::Visuals::UI::ZoomFieldOfView);
 					}
-					PopTransparent();
-					/*
+					PopTransparent();					
 					PushTransparent(!Vars::Visuals::UI::AspectRatio.Value);
 					{
 						FSlider(Vars::Visuals::UI::AspectRatio);
 					}
 					PopTransparent();
-					*/
 					FToggle(Vars::Visuals::UI::RevealScoreboard, FToggleEnum::Left);
 					FToggle(Vars::Visuals::UI::ScoreboardUtility, FToggleEnum::Right);
 					FToggle(Vars::Visuals::UI::ScoreboardColors, FToggleEnum::Left);
@@ -1203,12 +1201,16 @@ void CMenu::MenuVisuals(int iTab)
 					FSlider(Vars::Visuals::Viewmodel::Yaw, FSliderEnum::Right);
 					FSlider(Vars::Visuals::Viewmodel::OffsetZ, FSliderEnum::Left);
 					FSlider(Vars::Visuals::Viewmodel::Roll, FSliderEnum::Right);
+					PushTransparent(!Vars::Visuals::Viewmodel::FieldOfView.Value);
+					{
+						FSlider(Vars::Visuals::Viewmodel::FieldOfView, FSliderEnum::Clamp);
+					}
+					PopTransparent();
 					PushTransparent(!Vars::Visuals::Viewmodel::SwayScale.Value || !Vars::Visuals::Viewmodel::SwayInterp.Value);
 					{
 						FSlider(Vars::Visuals::Viewmodel::SwayScale, FSliderEnum::Left);
 						FSlider(Vars::Visuals::Viewmodel::SwayInterp, FSliderEnum::Right);
 					}
-					PopTransparent();
 				} EndSection();
 				if (Section("World"))
 				{

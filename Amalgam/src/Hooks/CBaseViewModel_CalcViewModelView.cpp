@@ -52,3 +52,16 @@ MAKE_HOOK(CBasePlayer_CalcViewModelView, S::CBasePlayer_CalcViewModelView(), voi
 	CALL_ORIGINAL(rcx, eyeOrigin, eyeAngles);
 	eyeOrigin = vOldEyeOrigin, eyeAngles = vOldEyeAngles;
 }
+
+MAKE_HOOK(ClientModeTFNormal_GetViewModelFOV, U::Memory.GetVirtual(I::ClientModeShared, 32), float,
+	/*void* rcx*/)
+{
+#ifdef DEBUG_HOOKS
+	if (!Vars::Hooks::CBasePlayer_CalcViewModelView[DEFAULT_BIND])
+		return CALL_ORIGINAL(/*rcx*/);
+#endif
+
+	if (float flFOV = Vars::Visuals::Viewmodel::FieldOfView.Value)
+		return flFOV;
+	return CALL_ORIGINAL(/*rcx*/);
+}
