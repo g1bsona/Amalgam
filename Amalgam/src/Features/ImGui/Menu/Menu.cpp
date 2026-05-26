@@ -1203,7 +1203,7 @@ void CMenu::MenuVisuals(int iTab)
 					FSlider(Vars::Visuals::Viewmodel::Roll, FSliderEnum::Right);
 					PushTransparent(!Vars::Visuals::Viewmodel::FieldOfView.Value);
 					{
-						FSlider(Vars::Visuals::Viewmodel::FieldOfView, FSliderEnum::Clamp);
+						FSlider(Vars::Visuals::Viewmodel::FieldOfView);
 					}
 					PopTransparent();
 					PushTransparent(!Vars::Visuals::Viewmodel::SwayScale.Value || !Vars::Visuals::Viewmodel::SwayInterp.Value);
@@ -1211,6 +1211,7 @@ void CMenu::MenuVisuals(int iTab)
 						FSlider(Vars::Visuals::Viewmodel::SwayScale, FSliderEnum::Left);
 						FSlider(Vars::Visuals::Viewmodel::SwayInterp, FSliderEnum::Right);
 					}
+					PopTransparent();
 				} EndSection();
 				if (Section("World"))
 				{
