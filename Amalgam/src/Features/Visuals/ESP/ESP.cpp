@@ -95,7 +95,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 					});
 
 					for (auto& [sName, tColor, _] : vTags)
-						tCache.m_vText.emplace_back(ALIGN_TOP, sName, tColor, tColor.IsColorDark() ? Color_t(255, 255, 255) : Color_t(0, 0, 0));
+						tCache.m_vText.emplace_back(ALIGN_BOTTOM, sName, tColor, tColor.IsColorDark() ? Color_t(255, 255, 255) : Color_t(0, 0, 0));
 				}
 			}
 		}

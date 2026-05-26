@@ -77,8 +77,8 @@ void COutput::Event(IGameEvent* pEvent, uint32_t uHash, CTFPlayer* pLocal)
 		auto sName = F::PlayerUtils.GetPlayerName(iIndex, pResource->GetName(iIndex));
 		bool bSameTeam = pEntity->As<CTFPlayer>()->m_iTeamNum() == pLocal->m_iTeamNum();
 		OutputInfo(Vars::Logging::ClassChange::LogTo.Value, "Class Change",
-			std::format("{}{} changed class to {}", (bSameTeam ? "" : "[Enemy] "), (sName), (SDK::GetClassByIndex(pEvent->GetInt("class")))).c_str(),
-			std::format("{}{}{}\x1 changed class to {}{}", (bSameTeam ? "" : "[Enemy] "), (s_sYellow), (sName), (s_sYellow), (SDK::GetClassByIndex(pEvent->GetInt("class")))).c_str()
+			std::format("{}{} switched to {}", (bSameTeam ? "" : "[Enemy] "), (sName), (SDK::GetClassByIndex(pEvent->GetInt("class")))).c_str(),
+			std::format("{}{}{}\x1 switched to {}{}", (bSameTeam ? "" : "[Enemy] "), (s_sYellow), (sName), (s_sYellow), (SDK::GetClassByIndex(pEvent->GetInt("class")))).c_str()
 		);
 
 		return;
@@ -105,12 +105,11 @@ void COutput::Event(IGameEvent* pEvent, uint32_t uHash, CTFPlayer* pLocal)
 		int nDamage = pEvent->GetInt("damageamount");
 		bool bCrit = pEvent->GetBool("crit");
 		bool bMinicrit = pEvent->GetBool("minicrit");
-		int iMaxHealth = pEntity->As<CTFPlayer>()->GetMaxHealth();
 
 		auto sName = F::PlayerUtils.GetPlayerName(iIndex, pResource->GetName(iIndex));
 		OutputInfo(Vars::Logging::Damage::LogTo.Value, "Damage",
-			std::format("Hit {} for {} damage ({} / {}{})", (sName), (nDamage), (nHealth), (iMaxHealth), (bCrit ? ", crit" : bMinicrit ? ", minicrit" : "")).c_str(),
-			std::format("Hit {}{}\x1 for {}{} damage{} ({} / {}{})", (s_sYellow), (sName), (s_sRed), (nDamage), (s_sYellow), (nHealth), (iMaxHealth), (bCrit ? ", crit" : bMinicrit ? ", minicrit" : "")).c_str()
+			std::format("Hit {} for {} (Crit: {}) ({} remaining)", (sName), (nDamage), (bCrit ? "True" : bMinicrit ? "Mini" : "False"), (nHealth)).c_str(),
+			std::format("Hit {}{}\x1 for {}{} (Crit: {}) ({} remaining)", (s_sYellow), (sName), (s_sRed), (nDamage), (bCrit ? "True" : bMinicrit ? "Mini" : "False"), (s_sYellow), (nHealth)).c_str()
 		);
 
 		return;
