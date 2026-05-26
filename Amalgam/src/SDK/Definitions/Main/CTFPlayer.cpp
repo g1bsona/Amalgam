@@ -283,7 +283,7 @@ const char* CTFPlayer::GetWeaponName()
 	case Demoman_m_FestiveGrenadeLauncher: { return "Grenade Launcher"; }
 	case Demoman_m_TheIronBomber: { return "Iron Bomber"; }
 	case Demoman_m_TheLochnLoad: { return "Loch N Load"; }
-	case Demoman_s_FestiveStickybombLauncher: { return "Stickybomb Launcher"; }
+	case Demoman_s_FestiveStickybombLauncher: { return "Stickybomb"; }
 	case Demoman_s_StickyJumper: { return "Sticky Jumper"; }
 	case Demoman_s_TheQuickiebombLauncher: { return "Quickiebomb"; }
 	case Demoman_s_TheScottishResistance: { return "Scottish Resistance"; }
