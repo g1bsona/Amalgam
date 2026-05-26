@@ -95,7 +95,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 					});
 
 					for (auto& [sName, tColor, _] : vTags)
-						tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, sName, tColor, tColor.IsColorDark() ? Color_t(255, 255, 255) : Color_t(0, 0, 0));
+						tCache.m_vText.emplace_back(ALIGN_TOP, sName, tColor, tColor.IsColorDark() ? Color_t(255, 255, 255) : Color_t(0, 0, 0));
 				}
 			}
 		}
@@ -110,7 +110,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 		Color_t tColor = Vars::Colors::IndicatorBad.Value.Lerp(Vars::Colors::IndicatorGood.Value, std::clamp(tCache.m_flHealth, 0.f, 1.f), LerpEnum::HSV);
 		tCache.m_vBars.emplace_back(ALIGN_LEFT, tCache.m_flHealth, tColor, Vars::Colors::IndicatorMisc.Value);
 	}
-	if (pGroup->m_iESP & ESPEnum::HealthText)
+	if ((pGroup->m_iESP & ESPEnum::HealthText) && flHealth != flMaxHealth)
 		tCache.m_vText.emplace_back(ALIGN_LEFT, std::format("{}", flHealth), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 	if (pGroup->m_iESP & (ESPEnum::UberBar | ESPEnum::UberText) && iClassNum == TF_CLASS_MEDIC)
@@ -131,6 +131,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 	if (pGroup->m_iESP & ESPEnum::ClassText)
 		tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, SDK::GetClassByIndex(iClassNum, false), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
+
 	if (pGroup->m_iESP & ESPEnum::WeaponIcon && pWeapon)
 		tCache.m_pWeaponIcon = pWeapon->GetWeaponIcon();
 	if (pGroup->m_iESP & ESPEnum::WeaponText && pWeapon)
@@ -139,18 +140,26 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 		auto pCurItemData = reinterpret_cast<void*>(uintptr_t(pAttributeManager) + 144);
 		tCache.m_vText.emplace_back(ALIGN_BOTTOM, SDK::ConvertWideToUTF8(S::CEconItemView_GetItemName.Call<const wchar_t*>(pCurItemData)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 	}
+	if (pGroup->m_iESP & ESPEnum::StaticWeaponText && pWeapon)
+	{
+		tCache.m_vText.emplace_back(ALIGN_BOTTOM, pPlayer->GetWeaponName(), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+	}
 
 	if (pGroup->m_iESP & ESPEnum::LagCompensation && !pPlayer->IsDormant() && !bLocal)
 	{
 		if (H::Entities.GetLagCompensation(iIndex))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Lagcomp", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "LAGCOMP", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 	}
 
 	if (pGroup->m_iESP & ESPEnum::Ping && pResource && !bLocal)
 	{
 		int iPing = pResource->m_iPing(iIndex);
+
+		Color_t tColor = Vars::Menu::Theme::Active.Value;
 		if (iPing && (iPing >= 200 || iPing <= 5))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("{}MS", iPing), Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tColor = Vars::Colors::IndicatorTextBad.Value;
+
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("{}MS", iPing), tColor, Vars::Menu::Theme::Background.Value);
 	}
 
 	if (pGroup->m_iESP & ESPEnum::KDR && pResource && !bLocal)
@@ -160,7 +169,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 		{
 			int iKDR = iKills / std::max(iDeaths, 1);
 			if (iKDR >= 10)
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("High KD [{} / {}]", iKills, iDeaths), Vars::Colors::IndicatorTextMid.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("HIGH KD [{} / {}]", iKills, iDeaths), Vars::Colors::IndicatorTextMid.Value, Vars::Menu::Theme::Background.Value);
 		}
 	}
 
@@ -171,11 +180,11 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 			pPlayer->InCond(TF_COND_INVULNERABLE_HIDE_UNLESS_DAMAGED) ||
 			pPlayer->InCond(TF_COND_INVULNERABLE_USER_BUFF) ||
 			pPlayer->InCond(TF_COND_INVULNERABLE_CARD_EFFECT))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Uber", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "UBER", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		else if (pPlayer->InCond(TF_COND_MEGAHEAL))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Megaheal", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "MEGAHEAL", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		else if (pPlayer->InCond(TF_COND_PHASE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Bonk", Vars::Colors::IndicatorTextMid.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BONK", Vars::Colors::IndicatorTextMid.Value, Vars::Menu::Theme::Background.Value);
 
 		bool bCrits = pPlayer->IsCritBoosted(), bMiniCrits = pPlayer->IsMiniCritBoosted();
 		if (pWeapon)
@@ -187,57 +196,57 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 				bCrits = false, bMiniCrits = true;
 		}
 		if (bCrits)
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Crits", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CRITS", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		else if (bMiniCrits)
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Mini-crits", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "MINICRITS", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 
 		/* vaccinator effects */
 		if (pPlayer->InCond(TF_COND_MEDIGUN_UBER_BULLET_RESIST) || pPlayer->InCond(TF_COND_BULLET_IMMUNE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Bullet+", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BULLET+", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		else if (pPlayer->InCond(TF_COND_MEDIGUN_SMALL_BULLET_RESIST))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Bullet", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BULLET", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_MEDIGUN_UBER_BLAST_RESIST) || pPlayer->InCond(TF_COND_BLAST_IMMUNE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Blast+", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BLAST+", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		else if (pPlayer->InCond(TF_COND_MEDIGUN_SMALL_BLAST_RESIST))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Blast", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BLAST", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_MEDIGUN_UBER_FIRE_RESIST) || pPlayer->InCond(TF_COND_FIRE_IMMUNE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Fire+", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "FIRE+", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		else if (pPlayer->InCond(TF_COND_MEDIGUN_SMALL_FIRE_RESIST))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Fire", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "FIRE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_OFFENSEBUFF))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Banner", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BANNER", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_DEFENSEBUFF))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Battalions", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BATTALIONS", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_REGENONDAMAGEBUFF))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Conch", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CONCH", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_RUNE_STRENGTH))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Strength", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "STRENGTH", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_HASTE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Haste", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "HASTE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_REGEN))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Regen", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REGEN", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_RESIST))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Resistance", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "RESISTANCE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_VAMPIRE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Vampire", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "VAMPIRE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_REFLECT))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Reflect", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REFLECT", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_PRECISION))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Precision", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "PRECISION", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_AGILITY))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Agility", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "AGILITY", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_KNOCKOUT))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Knockout", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "KNOCKOUT", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_KING))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "King", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "KING", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_PLAGUE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Plague", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "PLAGUE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_RUNE_SUPERNOVA))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Supernova", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "SUPERNOVA", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		if (pPlayer->InCond(TF_COND_POWERUPMODE_DOMINANT))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Dominant", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "DOMINANT", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		for (int i = 0; i < MAX_WEAPONS; i++)
 		{
@@ -247,22 +256,22 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 
 			switch (pWeapon->m_iSelectedSpellIndex())
 			{
-			case 0: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Fireball", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 1: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Bats", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 2: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Heal", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 3: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Pumpkins", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 4: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Jump", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 5: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Stealth", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 6: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Teleport", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 7: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Lightning", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 8: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Minify", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 9: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Meteors", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 10: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Monoculus", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 11: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Skeletons", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 12: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Glove", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 13: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Parachute", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 14: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Heal", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
-			case 15: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Bomb", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 0: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "FIREBALL", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 1: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BATS", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 2: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "HEAL", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 3: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "PUMPKINS", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 4: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "JUMP", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 5: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "STEALTH", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 6: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "TELEPORT", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 7: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "LIGHTNING", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 8: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "MINIFY", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 9: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "METEORS", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 10: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "MONOCULUS", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 11: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "SKELETONS", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 12: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "GLOVE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 13: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "PARACHUTE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 14: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "HEAL", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
+			case 15: tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BOMB", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value); break;
 			}
 		}
 
@@ -272,12 +281,12 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 			pPlayer->InCond(TF_COND_HALLOWEEN_QUICK_HEAL) ||
 			pPlayer->InCond(TF_COND_HALLOWEEN_HELL_HEAL) ||
 			pPlayer->InCond(TF_COND_KING_BUFFED))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Heal", Vars::Colors::IndicatorTextGood.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "HEAL", Vars::Colors::IndicatorTextGood.Value, Vars::Menu::Theme::Background.Value);
 		else if (pPlayer->InCond(TF_COND_HEALTH_OVERHEALED))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "HP+", Vars::Colors::IndicatorTextGood.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "OVERHEAL", Vars::Colors::IndicatorTextGood.Value, Vars::Menu::Theme::Background.Value);
 
-		//if (pPlayer->InCond(TF_COND_BLASTJUMPING))
-		//	tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Blastjump", Vars::Colors::IndicatorTextMid.Value, Vars::Menu::Theme::Background.Value);
+		if (pPlayer->InCond(TF_COND_BLASTJUMPING))
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BLASTJUMP", Vars::Colors::IndicatorTextMid.Value, Vars::Menu::Theme::Background.Value);
 	}
 
 	// Debuffs
@@ -286,22 +295,22 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 		if (pPlayer->InCond(TF_COND_MARKEDFORDEATH)
 			|| pPlayer->InCond(TF_COND_MARKEDFORDEATH_SILENT)
 			|| pPlayer->InCond(TF_COND_PASSTIME_PENALTY_DEBUFF))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Marked", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "MARKED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_URINE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Jarate", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "JARATE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_MAD_MILK))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Milk", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "MILK", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_STUNNED))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Stun", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "STUN", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_BURNING))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Burn", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BURN", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_BLEEDING))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Bleed", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "BLEED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 	}
 
 	// Misc
@@ -310,20 +319,20 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 		if (pPlayer->m_bFeignDeathReady())
 			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "DR", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		else if (pPlayer->InCond(TF_COND_FEIGN_DEATH))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Feign", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "FEIGN", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (float flInvis = pPlayer->GetEffectiveInvisibilityLevel())
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("Invis {:.0f}%", flInvis * 100), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("INVIS {:.0f}%", flInvis * 100), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_DISGUISED))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Disguise", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "DISGUISE", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pPlayer->InCond(TF_COND_AIMING) || pPlayer->InCond(TF_COND_ZOOMED))
 		{
 			switch (pWeapon ? pWeapon->GetWeaponID() : -1)
 			{
 			case TF_WEAPON_MINIGUN:
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Rev", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REVVED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 				break;
 			case TF_WEAPON_SNIPERRIFLE:
 			case TF_WEAPON_SNIPERRIFLE_CLASSIC:
@@ -331,7 +340,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 			{
 				if (bLocal)
 				{
-					tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("Charging {:.0f}%", Math::RemapVal(pWeapon->As<CTFSniperRifle>()->m_flChargedDamage(), 0.f, 150.f, 0.f, 100.f)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+					tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("ZOOMED {:.0f}%", Math::RemapVal(pWeapon->As<CTFSniperRifle>()->m_flChargedDamage(), 0.f, 150.f, 0.f, 100.f)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 					break;
 				}
 				else
@@ -348,37 +357,37 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 					if (CSniperDot* pPlayerDot = fGetSniperDot(pPlayer))
 					{
 						float flChargeTime = std::max(SDK::AttribHookValue(3.f, "mult_sniper_charge_per_sec", pWeapon), 1.5f);
-						tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("Charging {:.0f}%", Math::RemapVal(TICKS_TO_TIME(I::ClientState->m_ClockDriftMgr.m_nServerTick) - pPlayerDot->m_flChargeStartTime() - 0.3f, 0.f, flChargeTime, 0.f, 100.f)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+						tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("ZOOMED {:.0f}%", Math::RemapVal(TICKS_TO_TIME(I::ClientState->m_ClockDriftMgr.m_nServerTick) - pPlayerDot->m_flChargeStartTime() - 0.3f, 0.f, flChargeTime, 0.f, 100.f)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 						break;
 					}
 				}
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Charging", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "ZOOMED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 				break;
 			}
 			case TF_WEAPON_COMPOUND_BOW:
 				if (bLocal)
 				{
-					tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("Charging {:.0f}%", Math::RemapVal(TICKS_TO_TIME(I::ClientState->m_ClockDriftMgr.m_nServerTick) - pWeapon->As<CTFPipebombLauncher>()->m_flChargeBeginTime(), 0.f, 1.f, 0.f, 100.f)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+					tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("DRAWING {:.0f}%", Math::RemapVal(TICKS_TO_TIME(I::ClientState->m_ClockDriftMgr.m_nServerTick) - pWeapon->As<CTFPipebombLauncher>()->m_flChargeBeginTime(), 0.f, 1.f, 0.f, 100.f)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 					break;
 				}
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Charging", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "DRAWING", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 				break;
 			default:
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Charging", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "ZOOMED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 			}
 		}
 
 		if (pPlayer->InCond(TF_COND_SHIELD_CHARGE))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Charging", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CHARGING", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (Vars::Visuals::Removals::Taunts.Value && pPlayer->InCond(TF_COND_TAUNTING))
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Taunt", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "TAUNTING", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (Vars::Debug::Info.Value && !bLocal /*&& !pPlayer->IsDormant()*/)
 		{
 			int iAverage = TIME_TO_TICKS(F::MoveSim.GetPredictedDelta(pPlayer));
 			int iCurrent = H::Entities.GetChoke(iIndex);
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("Lag {}, {}", iAverage, iCurrent), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("LAG {}, {}", iAverage, iCurrent), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		}
 	}
 }
@@ -420,7 +429,7 @@ static inline void StoreBuilding(CBaseObject* pBuilding, CTFPlayer* pLocal, Grou
 		Color_t tColor = Vars::Colors::IndicatorBad.Value.Lerp(Vars::Colors::IndicatorGood.Value, std::clamp(tCache.m_flHealth, 0.f, 1.f), LerpEnum::HSV);
 		tCache.m_vBars.emplace_back(ALIGN_LEFT, tCache.m_flHealth, tColor, Vars::Colors::IndicatorMisc.Value);
 	}
-	if (pGroup->m_iESP & ESPEnum::HealthText)
+	if ((pGroup->m_iESP & ESPEnum::HealthText) && flHealth != flMaxHealth)
 		tCache.m_vText.emplace_back(ALIGN_LEFT, std::format("{}", flHealth), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 	if (pGroup->m_iESP & (ESPEnum::AmmoBars | ESPEnum::AmmoText) && pBuilding->IsSentrygun() && !pBuilding->m_bBuilding())
@@ -456,12 +465,12 @@ static inline void StoreBuilding(CBaseObject* pBuilding, CTFPlayer* pLocal, Grou
 			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("{:.0f}%", pBuilding->m_flPercentageConstructed() * 100), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pBuilding->IsSentrygun() && pBuilding->As<CObjectSentrygun>()->m_bPlayerControlled())
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Wrangled", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "WRANGLED", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 
 		if (pBuilding->m_bHasSapper())
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Sapped", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "SAPPED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		else if (pBuilding->m_bDisabled())
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Disabled", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "DISABLED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 	}
 }
 
@@ -556,19 +565,19 @@ static inline void StoreProjectile(CBaseEntity* pProjectile, CTFPlayer* pLocal, 
 		case ETFClassID::CTFProjectile_ThrowableBrick:
 		case ETFClassID::CTFProjectile_ThrowableRepel:
 			if (pProjectile->As<CTFWeaponBaseGrenadeProj>()->m_bCritical())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Crit", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CRIT", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			if (pProjectile->As<CTFWeaponBaseGrenadeProj>()->m_iDeflected() && (pProjectile->GetClassID() != ETFClassID::CTFGrenadePipebombProjectile || !pProjectile->GetAbsVelocity().IsZero()))
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Reflected", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REFLECTED", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			break;
 		case ETFClassID::CTFProjectile_Arrow:
 		case ETFClassID::CTFProjectile_GrapplingHook:
 		case ETFClassID::CTFProjectile_HealingBolt:
 			if (pProjectile->As<CTFProjectile_Arrow>()->m_bCritical())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Crit", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CRIT", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			if (pProjectile->As<CTFBaseRocket>()->m_iDeflected())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Reflected", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REFLECTED", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			if (pProjectile->As<CTFProjectile_Arrow>()->m_bArrowAlight())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Alight", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "ALIGHT", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			break;
 		case ETFClassID::CTFProjectile_Rocket:
 		case ETFClassID::CTFProjectile_BallOfFire:
@@ -578,21 +587,21 @@ static inline void StoreProjectile(CBaseEntity* pProjectile, CTFPlayer* pLocal, 
 		case ETFClassID::CTFProjectile_SpellLightningOrb:
 		case ETFClassID::CTFProjectile_SpellKartOrb:
 			if (pProjectile->As<CTFProjectile_Rocket>()->m_bCritical())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Crit", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CRIT", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			if (pProjectile->As<CTFBaseRocket>()->m_iDeflected())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Reflected", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REFLECTED", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			break;
 		case ETFClassID::CTFProjectile_EnergyBall:
 			if (pProjectile->As<CTFProjectile_EnergyBall>()->m_bChargedShot())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Charge", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CHARGE", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			if (pProjectile->As<CTFBaseRocket>()->m_iDeflected())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Reflected", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REFLECTED", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			break;
 		case ETFClassID::CTFProjectile_Flare:
 			if (pProjectile->As<CTFProjectile_Flare>()->m_bCritical())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Crit", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "CRIT", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			if (pProjectile->As<CTFBaseRocket>()->m_iDeflected())
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Reflected", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "REFECTED", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			break;
 		}
 	}
@@ -629,20 +638,20 @@ static inline void StoreObjective(CBaseEntity* pObjective, CTFPlayer* pLocal, Gr
 			switch (pIntel->m_nFlagStatus())
 			{
 			case TF_FLAGINFO_HOME:
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Home", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "HOME", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 				break;
 			case TF_FLAGINFO_DROPPED:
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Dropped", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "DROPPED", Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 				break;
 			default:
-				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "Stolen", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
+				tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, "STOLEN", Vars::Colors::IndicatorTextBad.Value, Vars::Menu::Theme::Background.Value);
 			}
 		}
 
 		if (pGroup->m_iESP & ESPEnum::IntelReturnTime && pIntel->m_nFlagStatus() == TF_FLAGINFO_DROPPED)
 		{
 			float flReturnTime = std::max(pIntel->m_flResetTime() - TICKS_TO_TIME(I::ClientState->m_ClockDriftMgr.m_nServerTick), 0.f);
-			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("Return {:.1f}s", pIntel->m_flResetTime() - TICKS_TO_TIME(I::ClientState->m_ClockDriftMgr.m_nServerTick)).c_str(), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
+			tCache.m_vText.emplace_back(ALIGN_TOPRIGHT, std::format("RETURN {:.1f}s", pIntel->m_flResetTime() - TICKS_TO_TIME(I::ClientState->m_ClockDriftMgr.m_nServerTick)).c_str(), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		}
 
 		break;
@@ -759,6 +768,7 @@ void CESP::DrawPlayers()
 	if (m_mPlayerCache.empty())
 		return;
 
+	const auto& fNameFont = H::Fonts.GetFont(FONT_NAME);
 	const auto& fFont = H::Fonts.GetFont(FONT_ESP);
 	const int nTall = fFont.m_nTall + H::Draw.Scale(2);
 	for (auto& [pEntity, tCache] : m_mPlayerCache)
@@ -837,11 +847,11 @@ void CESP::DrawPlayers()
 			switch (iMode)
 			{
 			case ALIGN_TOP:
-				H::Draw.StringOutlined(fFont, m, t - tOffset, tColor, tOutline, ALIGN_BOTTOM, sText.c_str());
+				H::Draw.StringOutlined(fNameFont, m, t - tOffset, tColor, tOutline, ALIGN_BOTTOM, sText.c_str());
 				tOffset += nTall;
 				break;
 			case ALIGN_BOTTOM:
-				H::Draw.StringOutlined(fFont, m, b + bOffset, tColor, tOutline, ALIGN_TOP, sText.c_str());
+				H::Draw.StringOutlined(fNameFont, m, b + bOffset, tColor, tOutline, ALIGN_TOP, sText.c_str());
 				bOffset += nTall;
 				break;
 			case ALIGN_LEFT:
@@ -892,6 +902,7 @@ void CESP::DrawBuildings()
 	if (m_mBuildingCache.empty())
 		return;
 
+	const auto& fNameFont = H::Fonts.GetFont(FONT_NAME);
 	const auto& fFont = H::Fonts.GetFont(FONT_ESP);
 	const int nTall = fFont.m_nTall + H::Draw.Scale(2);
 	for (auto& [pEntity, tCache] : m_mBuildingCache)
@@ -940,7 +951,7 @@ void CESP::DrawBuildings()
 			switch (iMode)
 			{
 			case ALIGN_TOP:
-				H::Draw.StringOutlined(fFont, m, t - tOffset, tColor, tOutline, ALIGN_BOTTOM, sText.c_str());
+				H::Draw.StringOutlined(fNameFont, m, t - tOffset, tColor, tOutline, ALIGN_BOTTOM, sText.c_str());
 				tOffset += nTall;
 				break;
 			case ALIGN_BOTTOM:
@@ -969,6 +980,7 @@ void CESP::DrawWorld()
 	if (m_mEntityCache.empty())
 		return;
 
+	const auto& fNameFont = H::Fonts.GetFont(FONT_NAME);
 	const auto& fFont = H::Fonts.GetFont(FONT_ESP);
 	const int nTall = fFont.m_nTall + H::Draw.Scale(2);
 	for (auto& [pEntity, tCache] : m_mEntityCache)
@@ -991,7 +1003,7 @@ void CESP::DrawWorld()
 			switch (iMode)
 			{
 			case ALIGN_TOP:
-				H::Draw.StringOutlined(fFont, m, t - tOffset, tColor, tOutline, ALIGN_BOTTOM, sText.c_str());
+				H::Draw.StringOutlined(fNameFont, m, t - tOffset, tColor, tOutline, ALIGN_BOTTOM, sText.c_str());
 				tOffset += nTall;
 				break;
 			case ALIGN_BOTTOM:

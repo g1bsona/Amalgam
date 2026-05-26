@@ -54,7 +54,7 @@ void CNotifications::Draw()
 
 	const auto& fFont = H::Fonts.GetFont(FONT_INDICATORS);
 
-	int h = H::Draw.Scale(40, Scale_Round);
+	int h = H::Draw.Scale(10, Scale_Round);
 	int y = !ShouldReverseY() ? H::Draw.Scale(8, Scale_Round) : H::Draw.m_nScreenH - H::Draw.Scale(8, Scale_Round) - h;
 	for (auto& tNotification : m_vNotifications)
 	{
@@ -80,18 +80,9 @@ void CNotifications::Draw()
 
 		x -= (w + H::Draw.Scale(8, Scale_Round)) * (1.f - flEaseX) * (!ShouldReverseX() ? 1 : -1);
 
-		Color_t tAccent = tNotification.m_tColor;
-		Color_t tBackground = Vars::Menu::Theme::Background.Value;
 		Color_t tActive = Vars::Menu::Theme::Active.Value;
 
-		H::Draw.FillRoundRect(x + 1, y + 1, w - 2, h - 2, H::Draw.Scale(3, Scale_Round), tBackground, 16);
-		H::Draw.StartClipping(x + 1, y + h - 1 - H::Draw.Scale(2, Scale_Round), w - 2, H::Draw.Scale(2, Scale_Round));
-		H::Draw.FillRoundRect(x + 1, y + 1, w - 2, h - 2, H::Draw.Scale(3, Scale_Round), tAccent.Alpha(50), 16);
-		H::Draw.StartClipping(x + 1, y + h - 1 - H::Draw.Scale(2, Scale_Round), (w - 2) * flLife, H::Draw.Scale(2, Scale_Round));
-		H::Draw.FillRoundRect(x + 1, y + 1, w - 2, h - 2, H::Draw.Scale(3, Scale_Round), tAccent.Alpha(255), 16);
-		H::Draw.EndClipping();
-		H::Draw.LineRoundRect(x, y, w, h, H::Draw.Scale(4, Scale_Round), tBackground.Lerp({ 127, 127, 127 }, 2.f / 9), 16);
-		H::Draw.StringOutlined(fFont, x + H::Draw.Scale(15, Scale_Round), y + H::Draw.Scale(13, Scale_Round), tActive.Alpha(255), Vars::Menu::Theme::Background.Value, ALIGN_TOPLEFT, tNotification.m_sText.c_str());
+		H::Draw.StringOutlined(fFont, x + H::Draw.Scale(6, Scale_Round), y + H::Draw.Scale(2, Scale_Round), tActive.Alpha(255), Vars::Menu::Theme::Background.Value, ALIGN_TOPLEFT, tNotification.m_sText.c_str());
 
 		y += (h + H::Draw.Scale(8, Scale_Round)) * (flEaseY) * (!ShouldReverseY() ? 1 : -1);
 	}

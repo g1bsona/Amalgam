@@ -225,6 +225,7 @@ public:
 	bool IsMarked();
 	bool CanAttack(bool bCloak = true, bool bLocal = true);
 	float GetCritMult();
+	const char* GetWeaponName();
 };
 
 class CTFRagdoll : public CBaseFlex
