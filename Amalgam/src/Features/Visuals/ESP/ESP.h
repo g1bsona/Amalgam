@@ -18,6 +18,13 @@ struct Bar_t
 	bool m_bAdjust = true;
 };
 
+struct HealthGradient_t
+{
+	Color_t GoodColor = {};
+	Color_t BadColor = {};
+	Color_t OverhealColor = {};
+};
+
 struct EntityCache_t
 {
 	float m_flAlpha = 1.f;

@@ -1015,6 +1015,14 @@ void CMenu::MenuVisuals(int iTab)
 					}
 					PopTransparent();
 				} EndSection();
+				if (Section("Health", 8))
+				{
+					{
+						FColorPicker("Health good color", &tGroup.m_tHealthGoodColor, FColorPickerEnum::Left);
+						FColorPicker("Health bad color", &tGroup.m_tHealthBadColor, FColorPickerEnum::Right);
+						FColorPicker("Health overheal color", &tGroup.m_tHealthOverhealColor, FColorPickerEnum::Left);
+					}
+				} EndSection();
 				if (Section("Chams"))
 				{
 					if (!tGroup.m_iTargets || tGroup.m_iTargets & TargetsEnum::Occluded)

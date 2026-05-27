@@ -107,8 +107,8 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 		tCache.m_flHealth = flHealth > flMaxHealth
 			? 1.f + std::clamp((flHealth - flMaxHealth) / (floorf(flMaxHealth / 10.f) * 5), 0.f, 1.f)
 			: std::clamp(flHealth / flMaxHealth, 0.f, 1.f);
-		Color_t tColor = Vars::Colors::IndicatorBad.Value.Lerp(Vars::Colors::IndicatorGood.Value, std::clamp(tCache.m_flHealth, 0.f, 1.f), LerpEnum::HSV);
-		tCache.m_vBars.emplace_back(ALIGN_LEFT, tCache.m_flHealth, tColor, Vars::Colors::IndicatorMisc.Value);
+		Color_t tColor = pGroup->m_tHealthBadColor.Lerp(pGroup->m_tHealthGoodColor, std::clamp(tCache.m_flHealth, 0.f, 1.f), LerpEnum::HSV);
+		tCache.m_vBars.emplace_back(ALIGN_LEFT, tCache.m_flHealth, tColor, pGroup->m_tHealthOverhealColor);
 	}
 	if ((pGroup->m_iESP & ESPEnum::HealthText) && flHealth != flMaxHealth)
 		tCache.m_vText.emplace_back(ALIGN_LEFT, std::format("{}", flHealth), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
@@ -120,7 +120,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 		{
 			float flUber = std::clamp(pMediGun->As<CWeaponMedigun>()->m_flChargeLevel(), 0.f, 1.f);
 			if (pGroup->m_iESP & ESPEnum::UberBar)
-				tCache.m_vBars.emplace_back(ALIGN_BOTTOM, flUber, Vars::Colors::IndicatorMisc.Value, Color_t(), false);
+				tCache.m_vBars.emplace_back(ALIGN_BOTTOM, flUber, pGroup->m_tHealthOverhealColor, Color_t(), false);
 			if (pGroup->m_iESP & ESPEnum::UberText)
 				tCache.m_vText.emplace_back(ALIGN_BOTTOMRIGHT, std::format("{:.0f}%", flUber * 100), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 		}

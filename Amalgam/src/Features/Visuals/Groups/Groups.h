@@ -30,6 +30,10 @@ struct Group_t
 
 	Glow_t m_tGlow = {};
 
+	Color_t m_tHealthGoodColor = { 100, 255, 100, 255 };
+	Color_t m_tHealthBadColor = { 255, 100, 100, 255 };
+	Color_t m_tHealthOverhealColor = { 75, 175, 255, 255 };
+
 	bool m_bOffscreenArrows = false;
 	int m_iOffscreenArrowsOffset = 100;
 	float m_flOffscreenArrowsMaxDistance = 1000.f;
