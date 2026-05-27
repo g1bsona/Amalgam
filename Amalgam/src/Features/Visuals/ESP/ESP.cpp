@@ -95,7 +95,7 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 					});
 
 					for (auto& [sName, tColor, _] : vTags)
-						tCache.m_vText.emplace_back(ALIGN_BOTTOM, sName, tColor, tColor.IsColorDark() ? Color_t(255, 255, 255) : Color_t(0, 0, 0));
+						tCache.m_vText.emplace_back(ALIGN_TOP, sName, tColor, tColor.IsColorDark() ? Color_t(255, 255, 255) : Color_t(0, 0, 0));
 				}
 			}
 		}
@@ -134,16 +134,17 @@ static inline void StorePlayer(CTFPlayer* pPlayer, CTFPlayer* pLocal, Group_t* p
 
 	if (pGroup->m_iESP & ESPEnum::WeaponIcon && pWeapon)
 		tCache.m_pWeaponIcon = pWeapon->GetWeaponIcon();
-	if (pGroup->m_iESP & ESPEnum::StaticWeaponText && pWeapon)
+	if (pGroup->m_iESP & ESPEnum::WeaponText && pWeapon)
 	{
 		tCache.m_vText.emplace_back(ALIGN_BOTTOM, pPlayer->GetWeaponName(), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
 	}
+	/* i dont think the user needs to see 'Strange Festivized Professional Killstreak Rocket Launcher' or god forbid their gun named "femboy fucker"
 	if (pGroup->m_iESP & ESPEnum::DynamicWeaponText && pWeapon)
 	{
 		auto pAttributeManager = U::Memory.CallVirtual<1, void*>(uintptr_t(pWeapon) + 3096);
 		auto pCurItemData = reinterpret_cast<void*>(uintptr_t(pAttributeManager) + 144);
 		tCache.m_vText.emplace_back(ALIGN_BOTTOM, SDK::ConvertWideToUTF8(S::CEconItemView_GetItemName.Call<const wchar_t*>(pCurItemData)), Vars::Menu::Theme::Active.Value, Vars::Menu::Theme::Background.Value);
-	}
+	}*/
 
 	if (pGroup->m_iESP & ESPEnum::LagCompensation && !pPlayer->IsDormant() && !bLocal)
 	{
@@ -851,7 +852,7 @@ void CESP::DrawPlayers()
 				tOffset += nTall;
 				break;
 			case ALIGN_BOTTOM:
-				H::Draw.StringOutlined(fNameFont, m, b + bOffset, tColor, tOutline, ALIGN_TOP, sText.c_str());
+				H::Draw.StringOutlined(fFont, m, b + bOffset, tColor, tOutline, ALIGN_TOP, sText.c_str());
 				bOffset += nTall;
 				break;
 			case ALIGN_LEFT:

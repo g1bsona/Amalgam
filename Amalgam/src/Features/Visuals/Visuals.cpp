@@ -264,7 +264,7 @@ void CVisuals::DrawPickupTimers()
 
 		Vec3 vScreen;
 		if (SDK::W2S(tPickup.m_vLocation, vScreen))
-			H::Draw.StringOutlined(H::Fonts.GetFont(FONT_ESP), vScreen.x, vScreen.y, pGroup->m_tColor, Vars::Menu::Theme::Background.Value, ALIGN_CENTER, std::format("{:.1f}s", flTime).c_str());
+			H::Draw.StringOutlined(H::Fonts.GetFont(FONT_NAME), vScreen.x, vScreen.y, pGroup->m_tColor, Vars::Menu::Theme::Background.Value, ALIGN_CENTER, std::format("{:.1f}s", flTime).c_str());
 
 		it++;
 	}

@@ -208,280 +208,280 @@ const char* CTFPlayer::GetWeaponName()
 	switch (this->m_hActiveWeapon().Get()->As<CTFWeaponBase>()->m_iItemDefinitionIndex())
 	{
 	case Scout_m_ForceANature:
-	case Scout_m_FestiveForceANature: { return "Force-A-Nature"; }
-	case Scout_m_FestiveScattergun: { return "Scattergun"; }
-	case Scout_m_BackcountryBlaster: { return "Backscatter"; }
-	case Scout_s_MutatedMilk: { return "Milk"; }
-	case Scout_s_TheWinger: { return "Winger"; }
+	case Scout_m_FestiveForceANature: { return "FORCE-A-NATURE"; }
+	case Scout_m_FestiveScattergun: { return "SCATTERGUN"; }
+	case Scout_m_BackcountryBlaster: { return "BACKSCATTER"; }
+	case Scout_s_MutatedMilk: { return "MILK"; }
+	case Scout_s_TheWinger: { return "WINGER"; }
 	case Scout_s_FestiveBonk:
-	case Scout_s_BonkAtomicPunch: { return "Bonk"; }
-	case Scout_s_PrettyBoysPocketPistol: { return "Pocket Pistol"; }
-	case Scout_s_CritaCola: { return "Crit a Cola"; }
-	case Scout_t_FestiveBat: { return "Bat"; }
-	case Scout_t_FestiveHolyMackerel: { return "Bat"; }
-	case Scout_t_TheAtomizer: { return "Atomizer"; }
-	case Scout_t_TheCandyCane: { return "Candy Cane"; }
-	case Scout_t_TheFanOWar: { return "Fan O War"; }
-	case Scout_t_SunonaStick: { return "Sun on a Stick"; }
-	case Scout_t_TheBostonBasher: { return "Boston Basher"; }
-	case Scout_t_ThreeRuneBlade: { return "Boston Basher"; }
-	case Scout_t_TheFreedomStaff: { return "Freedom Staff"; }
-	case Scout_t_TheBatOuttaHell: { return "Bat Outta Hell"; }
+	case Scout_s_BonkAtomicPunch: { return "BONK"; }
+	case Scout_s_PrettyBoysPocketPistol: { return "POCKET PISTOL"; }
+	case Scout_s_CritaCola: { return "CRIT A COLA"; }
+	case Scout_t_FestiveBat: { return "BAT"; }
+	case Scout_t_FestiveHolyMackerel: { return "BAT"; }
+	case Scout_t_TheAtomizer: { return "ATOMIZER"; }
+	case Scout_t_TheCandyCane: { return "CANDY CANE"; }
+	case Scout_t_TheFanOWar: { return "FAN O WAR"; }
+	case Scout_t_SunonaStick: { return "SUN ON A STICK"; }
+	case Scout_t_TheBostonBasher: { return "BOSTON BASHER"; }
+	case Scout_t_ThreeRuneBlade: { return "BOSTON BASHER"; }
+	case Scout_t_TheFreedomStaff: { return "FREEDOM STAFF"; }
+	case Scout_t_TheBatOuttaHell: { return "BAT OUTTA HELL"; }
 	case Scout_s_Lugermorph:
-	case Scout_s_VintageLugermorph: { return "Pistol"; }
-	case Scout_s_TheCAPPER: { return "Pistol"; }
-	case Scout_t_UnarmedCombat: { return "Bat"; }
-	case Scout_t_Batsaber: { return "Bat"; }
-	case Scout_t_TheHamShank: { return "Ham"; }
-	case Scout_t_TheNecroSmasher: { return "Hammer"; }
-	case Scout_t_TheConscientiousObjector: { return "Objector"; }
-	case Scout_t_TheCrossingGuard: { return "Crossing Guard"; }
-	case Scout_t_TheMemoryMaker: { return "Memory Maker"; }
+	case Scout_s_VintageLugermorph: { return "PISTOL"; }
+	case Scout_s_TheCAPPER: { return "PISTOL"; }
+	case Scout_t_UnarmedCombat: { return "BAT"; }
+	case Scout_t_Batsaber: { return "BAT"; }
+	case Scout_t_TheHamShank: { return "HAM"; }
+	case Scout_t_TheNecroSmasher: { return "NECRO SMASHER"; }
+	case Scout_t_TheConscientiousObjector: { return "OBJECTOR"; }
+	case Scout_t_TheCrossingGuard: { return "CROSSING GUARD"; }
+	case Scout_t_TheMemoryMaker: { return "MEMORY MAKER"; }
 
-	case Soldier_m_FestiveRocketLauncher: { return "Rocket Launcher"; }
-	case Soldier_m_RocketJumper: { return "Rocket Jumper"; }
-	case Soldier_m_TheAirStrike: { return "Air Strike"; }
-	case Soldier_m_TheLibertyLauncher: { return "Liberty Launcher"; }
-	case Soldier_m_TheOriginal: { return "Original"; }
+	case Soldier_m_FestiveRocketLauncher: { return "ROCKET LAUNCHER"; }
+	case Soldier_m_RocketJumper: { return "ROCKET JUMPER"; }
+	case Soldier_m_TheAirStrike: { return "AIR STRIKE"; }
+	case Soldier_m_TheLibertyLauncher: { return "LIBERTY LAUNCHER"; }
+	case Soldier_m_TheOriginal: { return "ORIGINAL"; }
 	case Soldier_m_FestiveBlackBox:
-	case Soldier_m_TheBlackBox: { return "Black Box"; }
-	case Soldier_m_TheBeggarsBazooka: { return "Beggars Bazooka"; }
-	case Soldier_s_FestiveShotgun: { return "Shotgun"; }
-	case Soldier_s_FestiveBuffBanner: { return "Buff Banner"; }
-	case Soldier_s_TheConcheror: { return "Conch"; }
-	case Soldier_s_TheBattalionsBackup: { return "Battalions"; }
-	case Soldier_s_PanicAttack: { return "{Panic Attack"; }
-	case Soldier_t_TheMarketGardener: { return "Market Gardener"; }
-	case Soldier_t_TheDisciplinaryAction: { return "Whip"; }
-	case Soldier_t_TheEqualizer: { return "Equalizer"; }
-	case Soldier_t_ThePainTrain: { return "Pain Train"; }
-	case Soldier_t_TheHalfZatoichi: { return "Half Zatoichi"; }
+	case Soldier_m_TheBlackBox: { return "BLACK BOX"; }
+	case Soldier_m_TheBeggarsBazooka: { return "BEGGARS BAZOOKA"; }
+	case Soldier_s_FestiveShotgun: { return "SHOTGUN"; }
+	case Soldier_s_FestiveBuffBanner: { return "BUFF BANNER"; }
+	case Soldier_s_TheConcheror: { return "CONCH"; }
+	case Soldier_s_TheBattalionsBackup: { return "BATTALIONS"; }
+	case Soldier_s_PanicAttack: { return "{PANIC ATTACK"; }
+	case Soldier_t_TheMarketGardener: { return "MARKET GARDENER"; }
+	case Soldier_t_TheDisciplinaryAction: { return "WHIP"; }
+	case Soldier_t_TheEqualizer: { return "EQUALIZER"; }
+	case Soldier_t_ThePainTrain: { return "PAIN TRAIN"; }
+	case Soldier_t_TheHalfZatoichi: { return "HALF ZATOICHI"; }
 
-	case Pyro_m_FestiveFlameThrower: { return "Flame Thrower"; }
-	case Pyro_m_ThePhlogistinator: { return "Phlog"; }
+	case Pyro_m_FestiveFlameThrower: { return "FLAME THROWER"; }
+	case Pyro_m_ThePhlogistinator: { return "PHLOG"; }
 	case Pyro_m_FestiveBackburner:
-	case Pyro_m_TheBackburner: { return "Backburner"; }
-	case Pyro_m_TheRainblower: { return "Flame Thrower"; }
-	case Pyro_m_TheDegreaser: { return "Degreaser"; }
-	case Pyro_m_NostromoNapalmer: { return "Flame Thrower"; }
-	case Pyro_s_FestiveFlareGun: { return "Flare Gun"; }
-	case Pyro_s_TheScorchShot: { return "Scorch Shot"; }
-	case Pyro_s_TheDetonator: { return "Detonator"; }
-	case Pyro_s_TheReserveShooter: { return "Reserve Shooter"; }
+	case Pyro_m_TheBackburner: { return "BACKBURNER"; }
+	case Pyro_m_TheRainblower: { return "FLAME THROWER"; }
+	case Pyro_m_TheDegreaser: { return "DEGREASER"; }
+	case Pyro_m_NostromoNapalmer: { return "FLAME THROWER"; }
+	case Pyro_s_FestiveFlareGun: { return "FLARE GUN"; }
+	case Pyro_s_TheScorchShot: { return "SCORCH SHOT"; }
+	case Pyro_s_TheDetonator: { return "DETONATOR"; }
+	case Pyro_s_TheReserveShooter: { return "RESERVE SHOOTER"; }
 	case Pyro_t_TheFestiveAxtinguisher:
-	case Pyro_t_TheAxtinguisher: { return "Axtinguisher"; }
-	case Pyro_t_Homewrecker: { return "Homewrecker"; }
-	case Pyro_t_ThePowerjack: { return "Powerjack"; }
-	case Pyro_t_TheBackScratcher: { return "Back Scratcher"; }
-	case Pyro_t_TheThirdDegree: { return "Third Degree"; }
-	case Pyro_t_ThePostalPummeler: { return "Postal Pummeler"; }
-	case Pyro_t_PrinnyMachete: { return "Prinny Machete"; }
-	case Pyro_t_SharpenedVolcanoFragment: { return "Volcano Fragment"; }
-	case Pyro_t_TheMaul: { return "Maul"; }
-	case Pyro_t_TheLollichop: { return "Fire Axe"; }
+	case Pyro_t_TheAxtinguisher: { return "AXTINGUISHER"; }
+	case Pyro_t_Homewrecker: { return "HOMEWRECKER"; }
+	case Pyro_t_ThePowerjack: { return "PWERJACK"; }
+	case Pyro_t_TheBackScratcher: { return "BACK SCRATCHER"; }
+	case Pyro_t_TheThirdDegree: { return "THIRD DEGREE"; }
+	case Pyro_t_ThePostalPummeler: { return "POSTAL PUMMELER"; }
+	case Pyro_t_PrinnyMachete: { return "PRINNY MACHETE"; }
+	case Pyro_t_SharpenedVolcanoFragment: { return "VOLCANO FRAGMENT"; }
+	case Pyro_t_TheMaul: { return "MAUL"; }
+	case Pyro_t_TheLollichop: { return "FIRE AXE"; }
 
-	case Demoman_m_FestiveGrenadeLauncher: { return "Grenade Launcher"; }
-	case Demoman_m_TheIronBomber: { return "Iron Bomber"; }
-	case Demoman_m_TheLochnLoad: { return "Loch N Load"; }
-	case Demoman_s_FestiveStickybombLauncher: { return "Stickybomb"; }
-	case Demoman_s_StickyJumper: { return "Sticky Jumper"; }
-	case Demoman_s_TheQuickiebombLauncher: { return "Quickiebomb"; }
-	case Demoman_s_TheScottishResistance: { return "Scottish Resistance"; }
-	case Demoman_t_HorselessHeadlessHorsemannsHeadtaker: { return "Eyelander"; }
-	case Demoman_t_TheScottishHandshake: { return "Bottle"; }
+	case Demoman_m_FestiveGrenadeLauncher: { return "GRENADE LAUNCHER"; }
+	case Demoman_m_TheIronBomber: { return "IRON BOMBER"; }
+	case Demoman_m_TheLochnLoad: { return "LOCH N LOAD"; }
+	case Demoman_s_FestiveStickybombLauncher: { return "STICKYBOMB LAUNCHER"; }
+	case Demoman_s_StickyJumper: { return "STICKY JUMPER"; }
+	case Demoman_s_TheQuickiebombLauncher: { return "QUICKIEBOMB"; }
+	case Demoman_s_TheScottishResistance: { return "SCOTTISH"; }
+	case Demoman_t_HorselessHeadlessHorsemannsHeadtaker: { return "EYELANDER"; }
+	case Demoman_t_TheScottishHandshake: { return "BOTTLE"; }
 	case Demoman_t_FestiveEyelander:
-	case Demoman_t_TheEyelander: { return "Eyelander"; }
-	case Demoman_t_TheScotsmansSkullcutter: { return "Skullcutter"; }
-	case Demoman_t_ThePersianPersuader: { return "Persian Persuader"; }
-	case Demoman_t_NessiesNineIron: { return "Nessies Nine Iron"; }
-	case Demoman_t_TheClaidheamhMor: { return "Claidheamh Mor"; }
+	case Demoman_t_TheEyelander: { return "EYELANDER"; }
+	case Demoman_t_TheScotsmansSkullcutter: { return "SKULLCUTTER"; }
+	case Demoman_t_ThePersianPersuader: { return "PERSIAN PERSUADER"; }
+	case Demoman_t_NessiesNineIron: { return "EYELANDER"; }
+	case Demoman_t_TheClaidheamhMor: { return "CLAIDHEAMH MOR"; }
 
-	case Heavy_m_IronCurtain: { return "Minigun"; }
-	case Heavy_m_FestiveMinigun: { return "Minigun"; }
-	case Heavy_m_Tomislav: { return "Tomislav"; }
-	case Heavy_m_TheBrassBeast: { return "Brass Beast"; }
-	case Heavy_m_Natascha: { return "Natascha"; }
+	case Heavy_m_IronCurtain: { return "MINIGUN"; }
+	case Heavy_m_FestiveMinigun: { return "MINIGUN"; }
+	case Heavy_m_Tomislav: { return "TOMISLAV"; }
+	case Heavy_m_TheBrassBeast: { return "BRASS BEAST"; }
+	case Heavy_m_Natascha: { return "NATASCHA"; }
 	case Heavy_m_TheHuoLongHeaterG:
-	case Heavy_m_TheHuoLongHeater: { return "Huo-Long Heater"; }
-	case Heavy_s_TheFamilyBusiness: { return "Family Business"; }
+	case Heavy_m_TheHuoLongHeater: { return "HUO-LONG HEATER"; }
+	case Heavy_s_TheFamilyBusiness: { return "FAMILY BUSINESS"; }
 	case Heavy_s_FestiveSandvich:
 	case Heavy_s_RoboSandvich:
-	case Heavy_s_Sandvich: { return "Sandvich"; }
-	case Heavy_s_Fishcake: { return "Chocolate"; }
-	case Heavy_s_SecondBanana: { return "Banana"; }
-	case Heavy_s_TheDalokohsBar: { return "Chocolate"; }
-	case Heavy_s_TheBuffaloSteakSandvich: { return "Steak"; }
-	case Heavy_t_FistsofSteel: { return "Fists of Steel"; }
-	case Heavy_t_TheHolidayPunch: { return "Holiday Punch"; }
-	case Heavy_t_WarriorsSpirit: { return "Warriors Spirit"; }
-	case Heavy_t_TheEvictionNotice: { return "Eviction Notice"; }
-	case Heavy_t_TheKillingGlovesofBoxing: { return "Killing Gloves of Boxing"; }
-	case Heavy_t_ApocoFists: { return "Fists"; }
+	case Heavy_s_Sandvich: { return "SANDVICH"; }
+	case Heavy_s_Fishcake: { return "CHOCOLATE"; }
+	case Heavy_s_SecondBanana: { return "BANANA"; }
+	case Heavy_s_TheDalokohsBar: { return "CHOCOLATE"; }
+	case Heavy_s_TheBuffaloSteakSandvich: { return "STEAK"; }
+	case Heavy_t_FistsofSteel: { return "FISTS OF STEEL"; }
+	case Heavy_t_TheHolidayPunch: { return "HOLIDAY PUNCH"; }
+	case Heavy_t_WarriorsSpirit: { return "WARRIORS SPIRIT"; }
+	case Heavy_t_TheEvictionNotice: { return "EVICTION NOTICE"; }
+	case Heavy_t_TheKillingGlovesofBoxing: { return "KILLING GLOVES OF BOXING"; }
+	case Heavy_t_ApocoFists: { return "FISTS"; }
 	case Heavy_t_FestiveGlovesofRunningUrgently:
-	case Heavy_t_GlovesofRunningUrgently: { return "Gloves of Running Urgently"; }
-	case Heavy_t_TheBreadBite: { return "Gloves of Running Urgently"; }
+	case Heavy_t_GlovesofRunningUrgently: { return "GLOVES OF RUNNING URGENTLY"; }
+	case Heavy_t_TheBreadBite: { return "GLOVES OF RUNNING URGENTLY"; }
 
-	case Engi_m_FestiveFrontierJustice: { return "Frontier Justice"; }
-	case Engi_m_TheWidowmaker: { return "Widowmaker"; }
+	case Engi_m_FestiveFrontierJustice: { return "FRONTIER JUSTICE"; }
+	case Engi_m_TheWidowmaker: { return "WIDOWMAKER"; }
 	case Engi_s_TheGigarCounter:
-	case Engi_s_FestiveWrangler: { return "Wrangler"; }
-	case Engi_s_TheShortCircuit: { return "Short Circuit"; }
-	case Engi_t_FestiveWrench: { return "Wrench"; }
-	case Engi_t_GoldenWrench: { return "Wrench"; }
-	case Engi_t_TheGunslinger: { return "Gunslinger"; }
-	case Engi_t_TheJag: { return "Jag"; }
-	case Engi_t_TheEurekaEffect: { return "Eureka Effect"; }
-	case Engi_t_TheSouthernHospitality: { return "Southern Hospitality"; }
+	case Engi_s_FestiveWrangler: { return "WRANGLER"; }
+	case Engi_s_TheShortCircuit: { return "SHORT CIRCUIT"; }
+	case Engi_t_FestiveWrench: { return "WRENCH"; }
+	case Engi_t_GoldenWrench: { return "WRENCH"; }
+	case Engi_t_TheGunslinger: { return "GUNSLINGER"; }
+	case Engi_t_TheJag: { return "JAG"; }
+	case Engi_t_TheEurekaEffect: { return "EUREKA EFFECT"; }
+	case Engi_t_TheSouthernHospitality: { return "SOUTHERN HOSPITALITY"; }
 
-	case Medic_m_FestiveCrusadersCrossbow: { return "Crossbow"; }
-	case Medic_m_TheOverdose: { return "Overdose"; }
-	case Medic_m_TheBlutsauger: { return "Blutsauger"; }
-	case Medic_s_FestiveMediGun: { return "Medigun"; }
-	case Medic_s_TheQuickFix: { return "Quick Fix"; }
-	case Medic_s_TheKritzkrieg: { return "Kritzkreig"; }
-	case Medic_s_TheVaccinator: { return "Vaccinator"; }
-	case Medic_t_FestiveBonesaw: { return "Bonesaw"; }
+	case Medic_m_FestiveCrusadersCrossbow: { return "CROSSBOW"; }
+	case Medic_m_TheOverdose: { return "OVERDOSE"; }
+	case Medic_m_TheBlutsauger: { return "BLUTSAUGER"; }
+	case Medic_s_FestiveMediGun: { return "MEDIGUN"; }
+	case Medic_s_TheQuickFix: { return "QUICK FIX"; }
+	case Medic_s_TheKritzkrieg: { return "KRITZKRIEG"; }
+	case Medic_s_TheVaccinator: { return "VACCINATOR"; }
+	case Medic_t_FestiveBonesaw: { return "BONESAW"; }
 	case Medic_t_FestiveUbersaw:
-	case Medic_t_TheUbersaw: { return "Ubersaw"; }
-	case Medic_t_TheVitaSaw: { return "Vitasaw"; }
-	case Medic_t_TheSolemnVow: { return "Solemn Vow"; }
-	case Medic_t_Amputator: { return "Amputator"; }
+	case Medic_t_TheUbersaw: { return "UBERSAW"; }
+	case Medic_t_TheVitaSaw: { return "VITASAW"; }
+	case Medic_t_TheSolemnVow: { return "SOLEMN VOW"; }
+	case Medic_t_Amputator: { return "AMPUTATOR"; }
 
-	case Sniper_m_FestiveSniperRifle: { return "Sniper Rifle"; }
+	case Sniper_m_FestiveSniperRifle: { return "SNIPER RIFLE"; }
 	case Sniper_m_FestiveHuntsman:
-	case Sniper_m_TheHuntsman: { return "Huntsman"; }
-	case Sniper_m_TheMachina: { return "Machina"; }
-	case Sniper_m_TheAWPerHand: { return "Sniper Rifle"; }
-	case Sniper_m_TheHitmansHeatmaker: { return "Heatmaker"; }
-	case Sniper_m_TheSydneySleeper: { return "Sydney Sleeper"; }
-	case Sniper_m_ShootingStar: { return "Machina"; }
-	case Sniper_s_FestiveJarate: { return "Jarate"; }
-	case Sniper_s_TheSelfAwareBeautyMark: { return "Jarate"; }
+	case Sniper_m_TheHuntsman: { return "HUNTSMAN"; }
+	case Sniper_m_TheMachina: { return "MACHINA"; }
+	case Sniper_m_TheAWPerHand: { return "SNIPER RIFLE"; }
+	case Sniper_m_TheHitmansHeatmaker: { return "HEATMAKER"; }
+	case Sniper_m_TheSydneySleeper: { return "SYDNEY SLEEPER"; }
+	case Sniper_m_ShootingStar: { return "MACHINA"; }
+	case Sniper_s_FestiveJarate: { return "JARATE"; }
+	case Sniper_s_TheSelfAwareBeautyMark: { return "JARATE"; }
 	case Sniper_s_FestiveSMG: { return "SMG"; }
-	case Sniper_t_TheBushwacka: { return "Bushwacka"; }
+	case Sniper_t_TheBushwacka: { return "BUSHWACKA"; }
 	case Sniper_t_KukriR:
-	case Sniper_t_Kukri: { return "Kukri"; }
-	case Sniper_t_TheShahanshah: { return "Shahanshah"; }
-	case Sniper_t_TheTribalmansShiv: { return "Tribalmans Shiv"; }
+	case Sniper_t_Kukri: { return "KUKRI"; }
+	case Sniper_t_TheShahanshah: { return "SHAHANSHAH"; }
+	case Sniper_t_TheTribalmansShiv: { return "TRIBALMANS SHIV"; }
 
-	case Spy_m_FestiveRevolver: { return "Revolver"; }
+	case Spy_m_FestiveRevolver: { return "REVOLVER"; }
 	case Spy_m_FestiveAmbassador:
-	case Spy_m_TheAmbassador: { return "Ambassador"; }
-	case Spy_m_BigKill: { return "Revoler"; }
-	case Spy_m_TheDiamondback: { return "Diamondback"; }
-	case Spy_m_TheEnforcer: { return "Enforcer"; }
-	case Spy_m_LEtranger: { return "Letranger"; }
+	case Spy_m_TheAmbassador: { return "AMBASSADOR"; }
+	case Spy_m_BigKill: { return "REVOLVER"; }
+	case Spy_m_TheDiamondback: { return "DIAMONDBACK"; }
+	case Spy_m_TheEnforcer: { return "ENFORCER"; }
+	case Spy_m_LEtranger: { return "LETRANGER"; }
 	case Spy_s_Sapper:
 	case Spy_s_SapperR:
-	case Spy_s_FestiveSapper: { return "Sapper"; }
+	case Spy_s_FestiveSapper: { return "SAPPER"; }
 	case Spy_s_TheRedTapeRecorder:
-	case Spy_s_TheRedTapeRecorderG: { return "Red Tape Recorder"; }
-	case Spy_s_TheApSapG: { return "Sapper"; }
-	case Spy_s_TheSnackAttack: { return "Sapper"; }
-	case Spy_t_FestiveKnife: { return "Knife"; }
-	case Spy_t_ConniversKunai: { return "Kunai"; }
-	case Spy_t_YourEternalReward: { return "Eternal Reward"; }
-	case Spy_t_TheBigEarner: { return "Big Earner"; }
-	case Spy_t_TheSpycicle: { return "Spycicle"; }
-	case Spy_t_TheSharpDresser: { return "Knife"; }
-	case Spy_t_TheWangaPrick: { return "Eternal Reward"; }
-	case Spy_t_TheBlackRose: { return "Knife"; }
+	case Spy_s_TheRedTapeRecorderG: { return "RED TAPE RECORDER"; }
+	case Spy_s_TheApSapG: { return "SAPPER"; }
+	case Spy_s_TheSnackAttack: { return "SAPPER"; }
+	case Spy_t_FestiveKnife: { return "KNIFE"; }
+	case Spy_t_ConniversKunai: { return "KUNAI"; }
+	case Spy_t_YourEternalReward: { return "ETERNAL REWARD"; }
+	case Spy_t_TheBigEarner: { return "BIG EARNER"; }
+	case Spy_t_TheSpycicle: { return "SPYCICLE"; }
+	case Spy_t_TheSharpDresser: { return "KNIFE"; }
+	case Spy_t_TheWangaPrick: { return "ETERNAL REWARD"; }
+	case Spy_t_TheBlackRose: { return "KNIFE"; }
 
-	case Heavy_m_Deflector_mvm: { return "Deflector"; }
-	case Misc_t_FryingPan: { return "Frying Pan"; }
-	case Misc_t_GoldFryingPan: { return "Frying Pan"; }
-	case Misc_t_Saxxy: { return "Saxxy"; }
+	case Heavy_m_Deflector_mvm: { return "DEFLECTOR"; }
+	case Misc_t_FryingPan: { return "FRYING PAN"; }
+	case Misc_t_GoldFryingPan: { return "FRYING PAN"; }
+	case Misc_t_Saxxy: { return "SAXXY"; }
 
 	default:
 	{
 		switch (this->m_hActiveWeapon().Get()->As<CTFWeaponBase>()->GetWeaponID())
 		{
 			//scout
-		case TF_WEAPON_SCATTERGUN: { return "Scattergun"; }
-		case TF_WEAPON_HANDGUN_SCOUT_PRIMARY: { return "Shortstop"; }
-		case TF_WEAPON_HANDGUN_SCOUT_SECONDARY: { return "Pistol"; }
-		case TF_WEAPON_SODA_POPPER: { return "Soda Popper"; }
-		case TF_WEAPON_PEP_BRAWLER_BLASTER: { return "Baby Faces Blaster"; }
-		case TF_WEAPON_PISTOL_SCOUT: { return "Pistol"; }
-		case TF_WEAPON_JAR_MILK: { return "Milk"; }
-		case TF_WEAPON_CLEAVER: { return "Cleaver"; }
-		case TF_WEAPON_BAT: { return "Bat"; }
-		case TF_WEAPON_BAT_WOOD: { return "Sandman"; }
-		case TF_WEAPON_BAT_FISH: { return "Bat"; }
-		case TF_WEAPON_BAT_GIFTWRAP: { return "Wrap Assassin"; }
+		case TF_WEAPON_SCATTERGUN: { return "SCATTERGUN"; }
+		case TF_WEAPON_HANDGUN_SCOUT_PRIMARY: { return "SHORTSTOP"; }
+		case TF_WEAPON_HANDGUN_SCOUT_SECONDARY: { return "PISTOL"; }
+		case TF_WEAPON_SODA_POPPER: { return "SODA POPPER"; }
+		case TF_WEAPON_PEP_BRAWLER_BLASTER: { return "BABY FACES BLASTER"; }
+		case TF_WEAPON_PISTOL_SCOUT: { return "PISTOL"; }
+		case TF_WEAPON_JAR_MILK: { return "MILK"; }
+		case TF_WEAPON_CLEAVER: { return "CLEAVER"; }
+		case TF_WEAPON_BAT: { return "BAT"; }
+		case TF_WEAPON_BAT_WOOD: { return "SANDMAN"; }
+		case TF_WEAPON_BAT_FISH: { return "BAT"; }
+		case TF_WEAPON_BAT_GIFTWRAP: { return "WRAP ASSASSIN"; }
 
 								   //soldier
-		case TF_WEAPON_ROCKETLAUNCHER: { return "Rocket Launcher"; }
-		case TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT: { return "Direct Hot"; }
-		case TF_WEAPON_PARTICLE_CANNON: { return "Cow Mangler"; }
-		case TF_WEAPON_SHOTGUN_SOLDIER: { return "Shotgun"; }
-		case TF_WEAPON_BUFF_ITEM: { return "Buff Banner"; }
-		case TF_WEAPON_RAYGUN: { return "Bison"; }
-		case TF_WEAPON_SHOVEL: { return "Shovel"; }
+		case TF_WEAPON_ROCKETLAUNCHER: { return "ROCKET LAUNCHER"; }
+		case TF_WEAPON_ROCKETLAUNCHER_DIRECTHIT: { return "DIRECT HIT"; }
+		case TF_WEAPON_PARTICLE_CANNON: { return "COW MANGLER"; }
+		case TF_WEAPON_SHOTGUN_SOLDIER: { return "SHOTGUN"; }
+		case TF_WEAPON_BUFF_ITEM: { return "BUFF BANNER"; }
+		case TF_WEAPON_RAYGUN: { return "BISON"; }
+		case TF_WEAPON_SHOVEL: { return "SHOVEL"; }
 
 							 //pyro
-		case TF_WEAPON_FLAMETHROWER: { return "Flame Thrower"; }
-		case TF_WEAPON_FLAME_BALL: { return "Dragons Fury"; }
-		case TF_WEAPON_SHOTGUN_PYRO: { return "Shotgun"; }
-		case TF_WEAPON_FLAREGUN: { return "Flare Gun"; }
-		case TF_WEAPON_FLAREGUN_REVENGE: { return "Manmelter"; }
-		case TF_WEAPON_JAR_GAS: { return "Gas Passer"; }
-		case TF_WEAPON_ROCKETPACK: { return "Thermal Thruster"; }
-		case TF_WEAPON_FIREAXE: { return "Fire Axe"; }
-		case TF_WEAPON_BREAKABLE_SIGN: { return "Neon Annihilator"; }
-		case TF_WEAPON_SLAP: { return "Hot Hand"; }
+		case TF_WEAPON_FLAMETHROWER: { return "FLAME THROWER"; }
+		case TF_WEAPON_FLAME_BALL: { return "DRAGONS FURY"; }
+		case TF_WEAPON_SHOTGUN_PYRO: { return "SHOTGUN"; }
+		case TF_WEAPON_FLAREGUN: { return "FLARE GUN"; }
+		case TF_WEAPON_FLAREGUN_REVENGE: { return "MANMELTER"; }
+		case TF_WEAPON_JAR_GAS: { return "GAS PASSER"; }
+		case TF_WEAPON_ROCKETPACK: { return "THERMAL THRUSTER"; }
+		case TF_WEAPON_FIREAXE: { return "FIRE AXE"; }
+		case TF_WEAPON_BREAKABLE_SIGN: { return "NEON ANNIHILATOR"; }
+		case TF_WEAPON_SLAP: { return "HOT HAND"; }
 
 						   //demoman
-		case TF_WEAPON_GRENADELAUNCHER: { return "Grenade Launcher"; }
-		case TF_WEAPON_PIPEBOMBLAUNCHER: { return "Stickybomb Launcher"; }
-		case TF_WEAPON_CANNON: { return "Loose Cannon"; }
-		case TF_WEAPON_BOTTLE: { return "Bottle"; }
-		case TF_WEAPON_SWORD: { return "Sword"; }
-		case TF_WEAPON_STICKBOMB: { return "Caber"; }
+		case TF_WEAPON_GRENADELAUNCHER: { return "GRENADE LAUNCHER"; }
+		case TF_WEAPON_PIPEBOMBLAUNCHER: { return "STICKYBOMB LAUNCHER"; }
+		case TF_WEAPON_CANNON: { return "LOOSE CANNON"; }
+		case TF_WEAPON_BOTTLE: { return "BOTTLE"; }
+		case TF_WEAPON_SWORD: { return "SWORD"; }
+		case TF_WEAPON_STICKBOMB: { return "CABER"; }
 
 								//heavy
-		case TF_WEAPON_MINIGUN: { return "Minigun"; }
-		case TF_WEAPON_SHOTGUN_HWG: { return "Shotgun"; }
-		case TF_WEAPON_LUNCHBOX: { return "Lunchbox"; }
-		case TF_WEAPON_FISTS: { return "Fists"; }
+		case TF_WEAPON_MINIGUN: { return "MINIGUN"; }
+		case TF_WEAPON_SHOTGUN_HWG: { return "SHOTGUN"; }
+		case TF_WEAPON_LUNCHBOX: { return "LUNCHBOX"; }
+		case TF_WEAPON_FISTS: { return "FISTS"; }
 
 							//engineer
-		case TF_WEAPON_SHOTGUN_PRIMARY: { return "Shotgun"; }
-		case TF_WEAPON_SHOTGUN_BUILDING_RESCUE: { return "Rescue Ranger"; }
-		case TF_WEAPON_SENTRY_REVENGE: { return "Frontier Justice"; }
-		case TF_WEAPON_DRG_POMSON: { return "Pomson"; }
-		case TF_WEAPON_PISTOL: { return "Pistol"; }
-		case TF_WEAPON_LASER_POINTER: { return "Wrangler"; }
-		case TF_WEAPON_MECHANICAL_ARM: { return "Short Circuit"; }
-		case TF_WEAPON_WRENCH: { return "Wrench"; }
-		case TF_WEAPON_PDA_ENGINEER_DESTROY: { return "Destruction PDA"; }
-		case TF_WEAPON_PDA_ENGINEER_BUILD: { return "Construction PDA"; }
-		case TF_WEAPON_BUILDER: { return "Toolbox"; }
+		case TF_WEAPON_SHOTGUN_PRIMARY: { return "SHOTGUN"; }
+		case TF_WEAPON_SHOTGUN_BUILDING_RESCUE: { return "RESCUE RANGER"; }
+		case TF_WEAPON_SENTRY_REVENGE: { return "FRONTIER JUSTICE"; }
+		case TF_WEAPON_DRG_POMSON: { return "POMSON"; }
+		case TF_WEAPON_PISTOL: { return "PISTOL"; }
+		case TF_WEAPON_LASER_POINTER: { return "WRANGLER"; }
+		case TF_WEAPON_MECHANICAL_ARM: { return "SHORT CIRCUIT"; }
+		case TF_WEAPON_WRENCH: { return "WRENCH"; }
+		case TF_WEAPON_PDA_ENGINEER_DESTROY: { return "DESTRUCTION PDA"; }
+		case TF_WEAPON_PDA_ENGINEER_BUILD: { return "CONSTRUCTION PDA"; }
+		case TF_WEAPON_BUILDER: { return "TOOLBOX"; }
 
 							  //medic
-		case TF_WEAPON_SYRINGEGUN_MEDIC: { return "Syringe Gun"; }
-		case TF_WEAPON_CROSSBOW: { return "Crossbow"; }
-		case TF_WEAPON_MEDIGUN: { return "Medigun"; }
-		case TF_WEAPON_BONESAW: { return "Bonesaw"; }
+		case TF_WEAPON_SYRINGEGUN_MEDIC: { return "SYRINGE GUN"; }
+		case TF_WEAPON_CROSSBOW: { return "CROSSBOW"; }
+		case TF_WEAPON_MEDIGUN: { return "MEDIGUN"; }
+		case TF_WEAPON_BONESAW: { return "BONESAW"; }
 
 							  //sniper
-		case TF_WEAPON_SNIPERRIFLE: { return "Sniper Rifle"; }
-		case TF_WEAPON_COMPOUND_BOW: { return "Huntsman"; }
-		case TF_WEAPON_SNIPERRIFLE_DECAP: { return "Bazaar Bargain"; }
-		case TF_WEAPON_SNIPERRIFLE_CLASSIC: { return "Classic"; }
+		case TF_WEAPON_SNIPERRIFLE: { return "SNIPER RIFLE"; }
+		case TF_WEAPON_COMPOUND_BOW: { return "HUNTSMAN"; }
+		case TF_WEAPON_SNIPERRIFLE_DECAP: { return "BAZAAR BARGAIN"; }
+		case TF_WEAPON_SNIPERRIFLE_CLASSIC: { return "CLASSIC"; }
 		case TF_WEAPON_SMG: { return "SMG"; }
-		case TF_WEAPON_CHARGED_SMG: { return "Cleaners Carbine"; }
-		case TF_WEAPON_JAR: { return "Jarate"; }
-		case TF_WEAPON_CLUB: { return "Kukri"; }
+		case TF_WEAPON_CHARGED_SMG: { return "CLEANERS CARBINE"; }
+		case TF_WEAPON_JAR: { return "JARATE"; }
+		case TF_WEAPON_CLUB: { return "KUKRI"; }
 
 						   //spy
-		case TF_WEAPON_REVOLVER: { return "Revolver"; }
-		case TF_WEAPON_PDA_SPY_BUILD: { return "Sapper"; }
-		case TF_WEAPON_KNIFE: { return "Knife"; }
-		case TF_WEAPON_PDA_SPY: { return "Disguise Kit"; }
-		case TF_WEAPON_INVIS: { return "Invis Watch"; }
+		case TF_WEAPON_REVOLVER: { return "REVOLVER"; }
+		case TF_WEAPON_PDA_SPY_BUILD: { return "SAPPER"; }
+		case TF_WEAPON_KNIFE: { return "KNIFE"; }
+		case TF_WEAPON_PDA_SPY: { return "DISGUISE KIT"; }
+		case TF_WEAPON_INVIS: { return "INVIS WATCH"; }
 
-		case TF_WEAPON_GRAPPLINGHOOK: { return "Grappling Hook"; }
+		case TF_WEAPON_GRAPPLINGHOOK: { return "GRAPPLING HOOK"; }
 
 		default: break;
 		}
