@@ -207,6 +207,7 @@
     <ClCompile Include="src\Hooks\CTFPlayerShared_IsCritBoosted.cpp" />
     <ClCompile Include="src\Hooks\CEngineClient_GetScreenAspectRatio.cpp" />
     <ClCompile Include="src\Features\AntiCheatCompatibility\AntiCheatCompatibility.cpp" />
+    <ClCompile Include="src\Hooks\CalcViewModelBobHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Utils\UtlVector\UtlVector.h" />

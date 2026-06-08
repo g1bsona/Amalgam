@@ -225,6 +225,10 @@ void CBacktrack::MakeRecords()
 		auto& vRecords = m_mRecords[pPlayer];
 
 		TickRecord* pLastRecord = !vRecords.empty() ? &vRecords.front() : nullptr;
+
+		if (pLastRecord && pLastRecord->m_flSimTime >= pPlayer->m_flSimulationTime())
+			continue;
+
 		vRecords.emplace_front(
 			pPlayer->m_flSimulationTime(),
 			pPlayer->m_vecOrigin(),

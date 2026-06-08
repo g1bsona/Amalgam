@@ -478,11 +478,11 @@ NAMESPACE_BEGIN(Vars)
 	NAMESPACE_BEGIN(AntiAim, Antiaim)
 		CVar(Enabled, VA_LIST("Enabled", "Antiaim enabled"), false);
 		CVarEnum(PitchReal, "Real pitch", 0, NONE, nullptr,
-			VA_LIST("None", "Up", "Down", "Zero", "Jitter", "Reverse jitter"),
-			None, Up, Down, Zero, Jitter, ReverseJitter);
+			VA_LIST("None", "Up", "Half up", "Half down", "Down", "Zero", "Jitter", "Reverse jitter"),
+			None, Up, HalfUp, HalfDown, Down, Zero, Jitter, ReverseJitter);
 		CVarEnum(PitchFake, "Fake pitch", 0, NONE, nullptr,
-			VA_LIST("None", "Up", "Down", "Jitter", "Reverse jitter"),
-			None, Up, Down, Jitter, ReverseJitter);
+			VA_LIST("None", "Up", "Half up", "Half down", "Down", "Zero", "Jitter", "Reverse jitter"),
+			None, Up, HalfUp, HalfDown, Down, Zero, Jitter, ReverseJitter);
 		Enum(Yaw, Forward, Left, Right, Backwards, Edge, Jitter, Spin);
 		CVarValues(YawReal, "Real yaw", 0, NONE, nullptr,
 			"Forward", "Left", "Right", "Backwards", "Edge", "Jitter", "Spin");
@@ -559,6 +559,7 @@ NAMESPACE_BEGIN(Vars)
 			CVar(ScreenOverlays, VA_LIST("Screen overlays", "Remove screen overlays"), false, VISUAL);
 			CVar(ScreenEffects, VA_LIST("Screen effects", "Remove screen effects"), false, VISUAL);
 			CVar(ViewPunch, VA_LIST("View punch", "Remove view punch"), false, VISUAL);
+			CVar(ViewmodelBob, VA_LIST("Viewmodel bob", "Remove viewmodel bob"), false, VISUAL);
 			CVar(AngleForcing, VA_LIST("Angle forcing", "Remove angle forcing"), false, VISUAL);
 			CVar(Ragdolls, VA_LIST("Ragdolls", "Remove ragdoll"), false, VISUAL);
 			CVar(Gibs, VA_LIST("Gibs", "Remove gibs"), false, VISUAL);
@@ -612,7 +613,7 @@ NAMESPACE_BEGIN(Vars)
 			CVar(NoPropFade, "No prop fade", false, VISUAL);
 		NAMESPACE_END(World)
 
-		NAMESPACE_BEGIN(Beams) // as of now, these will stay out of the menu
+		NAMESPACE_BEGIN(Beams)
 			CVar(Model, "Model", std::string("sprites/physbeam.vmt"), VISUAL);
 			CVar(Life, "Life", 2.f, VISUAL | SLIDER_MIN | SLIDER_PRECISION, 0.f, 10.f);
 			CVar(Width, "Width", 2.f, VISUAL | SLIDER_MIN | SLIDER_PRECISION, 0.f, 10.f);

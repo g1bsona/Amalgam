@@ -1175,6 +1175,19 @@ void CMenu::MenuVisuals(int iTab)
 					FToggle(Vars::Visuals::Effects::DrawIconsThroughWalls);
 					FToggle(Vars::Visuals::Effects::DrawDamageNumbersThroughWalls);
 				} EndSection();
+				if (Section("Beams", 8))
+				{
+					FSlider(Vars::Visuals::Beams::Life, FSliderEnum::Left);
+					FSlider(Vars::Visuals::Beams::Width, FSliderEnum::Right);
+					FSlider(Vars::Visuals::Beams::EndWidth, FSliderEnum::Left);
+					FSlider(Vars::Visuals::Beams::FadeLength, FSliderEnum::Right);
+					FSlider(Vars::Visuals::Beams::Amplitude, FSliderEnum::Left);
+					FSlider(Vars::Visuals::Beams::Brightness, FSliderEnum::Right);
+					FSlider(Vars::Visuals::Beams::Speed, FSliderEnum::Left);
+					FSlider(Vars::Visuals::Beams::Segments, FSliderEnum::Right);
+					FDropdown(Vars::Visuals::Beams::Flags, 8, -10);
+					FColorPicker(Vars::Visuals::Beams::Color, FColorPickerEnum::SameLine, {}, { H::Draw.Scale(10), H::Draw.Scale(40) });
+				} EndSection();
 			}
 			/* Column 2 */
 			TableNextColumn();
@@ -1194,10 +1207,11 @@ void CMenu::MenuVisuals(int iTab)
 					FToggle(Vars::Visuals::Removals::ScreenOverlays, FToggleEnum::Left);
 					FToggle(Vars::Visuals::Removals::ScreenEffects, FToggleEnum::Right);
 					FToggle(Vars::Visuals::Removals::ViewPunch, FToggleEnum::Left);
-					FToggle(Vars::Visuals::Removals::AngleForcing, FToggleEnum::Right);
-					FToggle(Vars::Visuals::Removals::Ragdolls, FToggleEnum::Left);
-					FToggle(Vars::Visuals::Removals::Gibs, FToggleEnum::Right);
-					FToggle(Vars::Visuals::Removals::MOTD, FToggleEnum::Left);
+					FToggle(Vars::Visuals::Removals::ViewmodelBob, FToggleEnum::Right);
+					FToggle(Vars::Visuals::Removals::AngleForcing, FToggleEnum::Left);
+					FToggle(Vars::Visuals::Removals::Ragdolls, FToggleEnum::Right);
+					FToggle(Vars::Visuals::Removals::Gibs, FToggleEnum::Left);
+					FToggle(Vars::Visuals::Removals::MOTD, FToggleEnum::Right);
 				} EndSection();
 				if (Section("Viewmodel", 8))
 				{
