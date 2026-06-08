@@ -163,6 +163,8 @@ float CAntiAim::GetPitch(float flCurPitch)
 	switch (Vars::AntiAim::PitchReal.Value)
 	{
 	case Vars::AntiAim::PitchRealEnum::Up: flRealPitch = -89.f; break;
+	case Vars::AntiAim::PitchRealEnum::HalfUp: flRealPitch = -45.f; break;
+	case Vars::AntiAim::PitchRealEnum::HalfDown: flRealPitch = 45.f; break;
 	case Vars::AntiAim::PitchRealEnum::Down: flRealPitch = 89.f; break;
 	case Vars::AntiAim::PitchRealEnum::Zero: flRealPitch = 0.f; break;
 	case Vars::AntiAim::PitchRealEnum::Jitter: flRealPitch = -89.f * iJitter; break;
